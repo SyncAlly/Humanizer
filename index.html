@@ -1114,9 +1114,9 @@
 
         <!-- no profile warning -->
         <div class="no-profile-banner" id="noProfileBanner">
-            <span>⚠️ No style profile loaded — Humanizer will rewrite using the selected preset or general guidelines.</span>
+            <span>Warning: No style profile loaded - Humanizer will rewrite using the selected preset or general guidelines.</span>
             <button class="btn" style="padding:4px 12px; font-size:11px; border-color:var(--red); color:var(--red); background:none;"
-                onclick="switchTabDirect('setup')">Go to Setup →</button>
+                onclick="switchTabDirect('setup')">Go to Setup -></button>
         </div>
 
         <div class="strength-row">
@@ -1165,10 +1165,10 @@
             <!-- OUTPUT PANE -->
             <div class="pane">
                 <div class="pane-header">
-                    <span class="pane-title">Output — Humanized Text</span>
+                    <span class="pane-title">Output - Humanized Text</span>
                     <div style="display:flex;gap:6px">
                         <button class="btn" style="padding:4px 10px; font-size:11px" onclick="rewriteAgain()"
-                            id="rewriteBtn" disabled>↺ Rewrite</button>
+                            id="rewriteBtn" disabled>Rewrite</button>
                         <button class="btn" style="padding:4px 10px; font-size:11px"
                             onclick="copyOutput()">Copy</button>
                     </div>
@@ -1207,15 +1207,14 @@
 
                 <div class="feedback-row" id="feedbackRow" style="display:none">
                     <span class="feedback-label">Was this output good?</span>
-                    <button class="btn primary" style="padding:5px 14px; font-size:11px" onclick="acceptOutput()">✓
-                        Accept & Learn</button>
-                    <button class="btn" style="padding:5px 14px; font-size:11px" onclick="rejectOutput()">✗ Discard</button>
+                    <button class="btn primary" style="padding:5px 14px; font-size:11px" onclick="acceptOutput()">Accept & Learn</button>
+                    <button class="btn" style="padding:5px 14px; font-size:11px" onclick="rejectOutput()">Discard</button>
                 </div>
             </div>
         </div>
 
         <div class="controls-row">
-            <button class="btn primary" id="humanizeBtn" onclick="humanize()">Humanize →</button>
+            <button class="btn primary" id="humanizeBtn" onclick="humanize()">Humanize -></button>
             <div class="loader" id="loader">
                 <div class="loader-dots"><span></span><span></span><span></span></div>
                 <span id="loaderText">Rewriting...</span>
@@ -1899,8 +1898,8 @@
             if (f.fragmentRate > 0.05) badges.push({ text: 'uses fragments', cls: 'green' });
             if (f.firstPersonRate > 0.01) badges.push({ text: 'first-person voice', cls: 'green' });
             if (f.foundHedges.length > 0) badges.push({ text: 'hedges naturally', cls: 'green' });
-            if (f.foundFillers.length > 0) badges.push({ text: '⚠️ AI fillers found', cls: 'red' });
-            if (f.burstiness < 4) badges.push({ text: '⚠️ low variation', cls: 'red' });
+            if (f.foundFillers.length > 0) badges.push({ text: 'AI fillers found', cls: 'red' });
+            if (f.burstiness < 4) badges.push({ text: 'low variation', cls: 'red' });
             badgesEl.innerHTML = badges.map(b => `<span class="badge ${b.cls}">${b.text}</span>`).join('');
         }
 
@@ -2065,11 +2064,11 @@ ${profileSection}
 
             let feedback = '';
             if (score > 84) {
-                feedback = '✨ Excellent structure and natural flow. Highly bypass-friendly.';
+                feedback = 'Excellent structure and natural flow. Highly bypass-friendly.';
             } else if (score >= 70) {
-                feedback = '👍 Solid revision. Adding contractions or varying sentence lengths will further humanize.';
+                feedback = 'Solid revision. Adding contractions or varying sentence lengths will further humanize.';
             } else {
-                feedback = `⚠️ Risk detected. Found ${foundFillers} AI transitional terms. Try raising rewrite strength or setting a Casal preset.`;
+                feedback = `Risk detected. Found ${foundFillers} AI transitional terms. Try raising rewrite strength or setting a Casual preset.`;
             }
 
             return { score, perplexity, likelihood, feedback };
@@ -2342,7 +2341,7 @@ ${profileSection}
         </div>` : ''}
         ${p.foundFillers?.length ? `
         <div class="detail-card" style="grid-column:1/-1">
-            <div class="label" style="color:var(--red)">AI filler patterns found in samples ⚠️</div>
+            <div class="label" style="color:var(--red)">AI filler patterns found in samples [Warning]</div>
             <div class="word-cloud">${p.foundFillers.map(w => `<span class="word-chip" style="border-color:rgba(239,68,68,0.3);color:var(--red)">${w}</span>`).join('')}</div>
             <div class="desc" style="margin-top:8px">These will be automatically filtered and replaced with natural phrasing.</div>
         </div>` : ''}
@@ -2358,7 +2357,7 @@ ${profileSection}
         <div class="detail-card">
             <div class="label">Training base</div>
             <div class="value">${p.sampleCount}</div>
-            <div class="desc">Samples · ${(p.wordCount || 0).toLocaleString()} total words</div>
+            <div class="desc">Samples - ${(p.wordCount || 0).toLocaleString()} total words</div>
             ${state.acceptedExamples.length > 0 ? `<div class="desc" style="margin-top:4px;color:var(--green)">+ ${state.acceptedExamples.length} refinement session(s)</div>` : ''}
         </div>`;
         }
