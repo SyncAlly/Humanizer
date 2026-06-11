@@ -77,7 +77,7 @@ Humanizer is compiled into a single, highly-optimized file:
 
 ```
 Humanizer/
-├── index.html        # Contains structure, glassmorphic layout, and core app logic
+├── index.html        # Contains structure, layout, and core app logic
 └── README.md         # Documentation
 ```
 

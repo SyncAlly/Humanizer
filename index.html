@@ -46,7 +46,7 @@
         }
 
         body {
-            background: radial-gradient(circle at top center, rgba(99, 102, 241, 0.04) 0%, rgba(0, 0, 0, 0) 65%), var(--ink);
+            background: var(--ink);
             color: var(--body);
             font-family: var(--font-sans);
             font-size: 13px;
@@ -63,9 +63,7 @@
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            background: rgba(9, 9, 11, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: var(--ink);
             z-index: 100;
         }
 
@@ -82,7 +80,6 @@
 
         .nav-logo span {
             color: var(--green);
-            text-shadow: 0 0 12px var(--green-dim);
         }
 
         .nav-tabs {
@@ -136,13 +133,11 @@
             height: 7px;
             border-radius: 50%;
             background: var(--red);
-            box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
             transition: all 0.3s;
         }
 
         .api-dot.connected {
             background: var(--green);
-            box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
         }
 
         /* ── VIEWS ── */
@@ -198,7 +193,6 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 24px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
             transition: all 0.2s ease;
         }
 
@@ -242,8 +236,7 @@
         textarea:focus,
         select:focus {
             border-color: var(--green);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
-            background: rgba(26, 26, 31, 0.95);
+            background: var(--ink-3);
         }
 
         input::placeholder,
@@ -288,16 +281,14 @@
         }
 
         .btn.primary {
-            background: linear-gradient(135deg, #10b981, #059669);
+            background: #10b981;
             border: none;
             color: #022c16;
             font-weight: 600;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
         }
 
         .btn.primary:hover {
-            background: linear-gradient(135deg, #34d399, #059669);
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+            background: #34d399;
             transform: translateY(-1.5px);
         }
 
@@ -403,7 +394,6 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
         }
 
         .pane-header {
@@ -754,7 +744,7 @@
 
         .meter-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--green), #34d399);
+            background: var(--green);
             border-radius: 20px;
             transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -793,7 +783,6 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             pointer-events: none;
             z-index: 999;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
         #toast.show {
