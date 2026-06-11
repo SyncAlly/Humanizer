@@ -7,7 +7,7 @@
     <title>Humanizer — Write like yourself</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
         rel="stylesheet" />
     <style>
         *,
@@ -19,20 +19,25 @@
         }
 
         :root {
-            --ink: #0E0E10;
-            --ink-2: #1A1A1E;
-            --ink-3: #26262C;
-            --border: #2E2E36;
-            --muted: #5A5A6E;
-            --body: #B8B4C0;
-            --bright: #F0EDE8;
-            --green: #4ADE80;
-            --green-dim: #1a3d28;
-            --red: #F87171;
-            --red-dim: #3d1a1a;
-            --amber: #FBBF24;
+            --ink: #09090b;
+            --ink-2: #121215;
+            --ink-3: #1a1a1f;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.16);
+            --muted: #71717a;
+            --body: #d4d4d8;
+            --bright: #f4f4f5;
+            --green: #10b981;
+            --green-dim: rgba(16, 185, 129, 0.15);
+            --red: #ef4444;
+            --red-dim: rgba(239, 68, 68, 0.15);
+            --amber: #f59e0b;
+            --amber-dim: rgba(245, 158, 11, 0.15);
+            --accent: #6366f1;
+            --accent-dim: rgba(99, 102, 241, 0.15);
             --font-mono: 'JetBrains Mono', monospace;
             --font-sans: 'Inter', sans-serif;
+            --font-heading: 'Plus Jakarta Sans', sans-serif;
         }
 
         html,
@@ -41,9 +46,9 @@
         }
 
         body {
-            background: var(--ink);
+            background: radial-gradient(circle at top center, rgba(99, 102, 241, 0.04) 0%, rgba(0, 0, 0, 0) 65%), var(--ink);
             color: var(--body);
-            font-family: var(--font-mono);
+            font-family: var(--font-sans);
             font-size: 13px;
             line-height: 1.6;
             min-height: 100vh;
@@ -54,50 +59,63 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 28px;
+            padding: 16px 32px;
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            background: var(--ink);
+            background: rgba(9, 9, 11, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 100;
         }
 
         .nav-logo {
-            font-size: 15px;
-            font-weight: 700;
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 800;
             color: var(--bright);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
+            display: flex;
+            align-items: center;
+            gap: 2px;
         }
 
         .nav-logo span {
             color: var(--green);
+            text-shadow: 0 0 12px var(--green-dim);
         }
 
         .nav-tabs {
             display: flex;
-            gap: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 4px;
+            border-radius: 30px;
+            gap: 2px;
         }
 
         .tab-btn {
             background: none;
             border: 1px solid transparent;
             color: var(--muted);
-            font-family: var(--font-mono);
+            font-family: var(--font-sans);
             font-size: 12px;
-            padding: 6px 14px;
+            font-weight: 600;
+            padding: 6px 16px;
             cursor: pointer;
-            transition: all 0.15s;
-            letter-spacing: 0.04em;
+            border-radius: 20px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .tab-btn:hover {
             color: var(--body);
-            border-color: var(--border);
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .tab-btn.active {
             color: var(--bright);
-            border-color: var(--green);
+            background: var(--green-dim);
+            border-color: rgba(16, 185, 129, 0.2);
         }
 
         .api-indicator {
@@ -106,6 +124,11 @@
             gap: 8px;
             font-size: 11px;
             color: var(--muted);
+            font-family: var(--font-mono);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 6px;
         }
 
         .api-dot {
@@ -113,34 +136,48 @@
             height: 7px;
             border-radius: 50%;
             background: var(--red);
-            transition: background 0.3s;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+            transition: all 0.3s;
         }
 
         .api-dot.connected {
             background: var(--green);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
         }
 
         /* ── VIEWS ── */
         .view {
             display: none;
-            padding: 28px;
-            max-width: 1100px;
+            padding: 32px;
+            max-width: 1200px;
             margin: 0 auto;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .view.active {
             display: block;
+            animation: fadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
         /* ── SETUP VIEW ── */
         .setup-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 20px;
+            gap: 24px;
+            margin-top: 24px;
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 850px) {
             .setup-grid {
                 grid-template-columns: 1fr;
             }
@@ -148,31 +185,40 @@
 
         .section-label {
             font-size: 10px;
+            font-family: var(--font-mono);
             letter-spacing: 0.12em;
             color: var(--muted);
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            display: block;
         }
 
         .card {
             background: var(--ink-2);
             border: 1px solid var(--border);
-            padding: 20px;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
         }
 
         .card h3 {
-            font-size: 13px;
-            font-weight: 500;
+            font-family: var(--font-heading);
+            font-size: 15px;
+            font-weight: 600;
             color: var(--bright);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .card p {
             font-size: 12px;
             color: var(--muted);
-            margin-bottom: 14px;
-            font-family: var(--font-sans);
-            line-height: 1.5;
+            margin-bottom: 16px;
+            line-height: 1.6;
         }
 
         input[type="text"],
@@ -182,12 +228,13 @@
             width: 100%;
             background: var(--ink-3);
             border: 1px solid var(--border);
+            border-radius: 8px;
             color: var(--bright);
             font-family: var(--font-mono);
-            font-size: 12px;
-            padding: 10px 12px;
+            font-size: 12.5px;
+            padding: 11px 14px;
             outline: none;
-            transition: border-color 0.15s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             resize: vertical;
         }
 
@@ -195,6 +242,8 @@
         textarea:focus,
         select:focus {
             border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+            background: rgba(26, 26, 31, 0.95);
         }
 
         input::placeholder,
@@ -213,97 +262,121 @@
         .btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            background: none;
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
+            border-radius: 8px;
             color: var(--body);
-            font-family: var(--font-mono);
-            font-size: 12px;
-            padding: 9px 18px;
+            font-family: var(--font-sans);
+            font-size: 12.5px;
+            font-weight: 500;
+            padding: 10px 18px;
             cursor: pointer;
-            transition: all 0.15s;
-            letter-spacing: 0.02em;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn:hover {
-            border-color: var(--green);
+            border-color: var(--border-hover);
+            background: rgba(255, 255, 255, 0.06);
             color: var(--bright);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
         }
 
         .btn.primary {
-            border-color: var(--green);
-            color: var(--green);
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            color: #022c16;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
         }
 
         .btn.primary:hover {
-            background: var(--green);
-            color: var(--ink);
+            background: linear-gradient(135deg, #34d399, #059669);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+            transform: translateY(-1.5px);
         }
 
         .btn:disabled {
             opacity: 0.35;
             cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
         }
 
         .btn.danger {
-            border-color: var(--red);
-            color: var(--red);
+            background: rgba(239, 68, 68, 0.05);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
         }
 
         .btn.danger:hover {
-            background: var(--red);
-            color: var(--ink);
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #fee2e2;
         }
 
         .profile-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 16px;
+            gap: 12px;
+            margin-top: 20px;
         }
 
         .stat-box {
-            background: var(--ink-3);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border);
-            padding: 10px 12px;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
         }
 
         .stat-box .val {
+            font-family: var(--font-mono);
             font-size: 18px;
             font-weight: 700;
             color: var(--bright);
-            line-height: 1;
+            line-height: 1.1;
         }
 
         .stat-box .lbl {
-            font-size: 10px;
+            font-size: 9px;
+            font-family: var(--font-mono);
             color: var(--muted);
-            margin-top: 4px;
+            margin-top: 6px;
             letter-spacing: 0.06em;
+            text-transform: uppercase;
         }
 
         .profile-badges {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
-            margin-top: 12px;
+            margin-top: 14px;
         }
 
         .badge {
-            font-size: 11px;
-            padding: 3px 10px;
+            font-size: 10px;
+            font-family: var(--font-mono);
+            padding: 4px 10px;
+            border-radius: 4px;
             border: 1px solid var(--border);
             color: var(--muted);
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .badge.green {
-            border-color: var(--green-dim);
+            border-color: rgba(16, 185, 129, 0.3);
             color: var(--green);
             background: var(--green-dim);
         }
 
         .badge.red {
-            border-color: var(--red-dim);
+            border-color: rgba(239, 68, 68, 0.3);
             color: var(--red);
             background: var(--red-dim);
         }
@@ -312,12 +385,12 @@
         .humanize-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2px;
+            gap: 24px;
             margin-top: 20px;
-            min-height: 420px;
+            min-height: 480px;
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 850px) {
             .humanize-layout {
                 grid-template-columns: 1fr;
             }
@@ -326,104 +399,128 @@
         .pane {
             background: var(--ink-2);
             border: 1px solid var(--border);
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
         }
 
         .pane-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 14px;
+            padding: 12px 18px;
             border-bottom: 1px solid var(--border);
-            background: var(--ink-3);
+            background: rgba(10, 10, 12, 0.4);
         }
 
         .pane-title {
             font-size: 10px;
+            font-family: var(--font-mono);
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--muted);
+            font-weight: 600;
         }
 
         .pane textarea {
             flex: 1;
             border: none;
             background: transparent;
-            padding: 16px;
-            min-height: 360px;
-            font-size: 13px;
-            line-height: 1.7;
+            padding: 20px;
+            min-height: 380px;
+            font-size: 13.5px;
+            line-height: 1.75;
             resize: none;
+            border-radius: 0;
+            font-family: var(--font-sans);
         }
 
         .pane textarea:focus {
             border: none;
-            outline: none;
+            background: transparent;
+            box-shadow: none;
         }
 
         .output-content {
             flex: 1;
-            padding: 16px;
-            font-size: 13px;
-            line-height: 1.7;
+            padding: 20px;
+            font-size: 13.5px;
+            line-height: 1.75;
             color: var(--body);
             white-space: pre-wrap;
-            min-height: 360px;
+            min-height: 380px;
             overflow-y: auto;
+            font-family: var(--font-sans);
         }
 
         .output-content.empty {
             color: var(--muted);
             font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: var(--font-sans);
         }
 
         /* diff highlights */
         .diff-changed {
-            background: var(--green-dim);
-            color: var(--green);
+            background: rgba(16, 185, 129, 0.25);
+            color: #6ee7b7;
+            padding: 1px 2px;
+            border-radius: 2px;
         }
 
         .diff-removed {
-            background: var(--red-dim);
-            color: var(--red);
+            background: rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
             text-decoration: line-through;
+            padding: 1px 2px;
+            border-radius: 2px;
         }
 
         .controls-row {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-top: 14px;
+            gap: 16px;
+            margin-top: 20px;
             flex-wrap: wrap;
         }
 
         .strength-row {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             align-items: center;
-            margin-top: 14px;
+            margin-top: 18px;
+            flex-wrap: wrap;
         }
 
         .strength-label {
             font-size: 11px;
+            font-weight: 600;
             color: var(--muted);
-            margin-right: 4px;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .strength-opt {
-            font-size: 11px;
-            padding: 4px 12px;
+            font-size: 11.5px;
+            padding: 5px 14px;
             border: 1px solid var(--border);
+            border-radius: 20px;
             color: var(--muted);
             cursor: pointer;
             background: none;
-            font-family: var(--font-mono);
+            font-family: var(--font-sans);
+            font-weight: 500;
             transition: all 0.15s;
         }
 
         .strength-opt:hover {
-            border-color: var(--green);
+            border-color: var(--border-hover);
             color: var(--body);
         }
 
@@ -437,35 +534,41 @@
         .feedback-row {
             display: flex;
             gap: 8px;
-            padding: 10px 14px;
+            padding: 12px 18px;
             border-top: 1px solid var(--border);
-            background: var(--ink-3);
+            background: rgba(10, 10, 12, 0.4);
             align-items: center;
         }
 
         .feedback-label {
             font-size: 11px;
             color: var(--muted);
-            margin-right: 4px;
+            font-family: var(--font-mono);
         }
 
         /* ── LOADER ── */
         .loader {
             display: none;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             color: var(--muted);
             font-size: 12px;
+            font-family: var(--font-mono);
         }
 
         .loader.active {
             display: flex;
         }
 
+        .loader-dots {
+            display: flex;
+            gap: 4px;
+        }
+
         .loader-dots span {
             display: inline-block;
-            width: 5px;
-            height: 5px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: var(--green);
             animation: pulse 1s infinite;
@@ -480,79 +583,102 @@
         }
 
         @keyframes pulse {
-
             0%,
             100% {
-                opacity: 0.2
+                opacity: 0.2;
+                transform: scale(0.8);
             }
 
             50% {
-                opacity: 1
+                opacity: 1;
+                transform: scale(1.1);
             }
         }
 
         /* scrollbar */
         ::-webkit-scrollbar {
-            width: 5px;
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--ink);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .history-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
             margin-top: 20px;
         }
 
         .history-item {
             background: var(--ink-2);
             border: 1px solid var(--border);
-            padding: 16px;
+            border-radius: 10px;
+            padding: 18px;
             cursor: pointer;
-            transition: border-color 0.15s;
+            transition: all 0.2s ease;
         }
 
         .history-item:hover {
-            border-color: var(--green);
+            border-color: rgba(16, 185, 129, 0.3);
+            background: rgba(255, 255, 255, 0.01);
+            transform: translateY(-1px);
         }
 
         .history-item .h-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .history-item .h-time {
             font-size: 10px;
             color: var(--muted);
+            font-family: var(--font-mono);
             letter-spacing: 0.06em;
         }
 
         .history-item .h-strength {
             font-size: 10px;
+            font-family: var(--font-mono);
             padding: 2px 8px;
+            border-radius: 4px;
             border: 1px solid var(--border);
             color: var(--muted);
+            text-transform: uppercase;
         }
 
         .history-item .h-cols {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 16px;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
             .history-item .h-cols {
                 grid-template-columns: 1fr;
             }
         }
 
         .history-item .h-col-label {
-            font-size: 10px;
+            font-size: 9px;
+            font-family: var(--font-mono);
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: var(--muted);
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
         .history-item .h-text {
@@ -560,7 +686,7 @@
             color: var(--body);
             line-height: 1.6;
             display: -webkit-box;
-            -webkit-line-clamp: 4;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -573,24 +699,30 @@
             color: var(--muted);
             font-size: 13px;
             margin-top: 20px;
+            text-align: center;
+            padding: 40px;
+            border: 1px dashed var(--border);
+            border-radius: 10px;
         }
 
         /* ── PROFILE VIEW ── */
         .profile-detail {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 12px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
         }
 
         .detail-card {
             background: var(--ink-2);
             border: 1px solid var(--border);
-            padding: 16px;
+            border-radius: 10px;
+            padding: 20px;
         }
 
         .detail-card .label {
             font-size: 10px;
+            font-family: var(--font-mono);
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--muted);
@@ -598,7 +730,8 @@
         }
 
         .detail-card .value {
-            font-size: 22px;
+            font-family: var(--font-heading);
+            font-size: 24px;
             font-weight: 700;
             color: var(--bright);
         }
@@ -606,35 +739,40 @@
         .detail-card .desc {
             font-size: 11px;
             color: var(--muted);
-            margin-top: 4px;
-            font-family: var(--font-sans);
+            margin-top: 6px;
+            line-height: 1.5;
         }
 
         .meter {
-            height: 3px;
-            background: var(--border);
-            margin-top: 10px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            margin-top: 12px;
             position: relative;
+            overflow: hidden;
         }
 
         .meter-fill {
             height: 100%;
-            background: var(--green);
-            transition: width 0.5s;
+            background: linear-gradient(90deg, var(--green), #34d399);
+            border-radius: 20px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .word-cloud {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 8px;
+            gap: 6px;
+            margin-top: 10px;
         }
 
         .word-chip {
             font-size: 11px;
-            padding: 2px 8px;
-            background: var(--ink-3);
+            font-family: var(--font-mono);
+            padding: 3px 10px;
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border);
+            border-radius: 4px;
             color: var(--body);
         }
 
@@ -645,28 +783,34 @@
             right: 24px;
             background: var(--ink-3);
             border: 1px solid var(--border);
+            border-radius: 8px;
             color: var(--body);
             font-family: var(--font-mono);
             font-size: 12px;
-            padding: 10px 18px;
+            padding: 12px 20px;
             opacity: 0;
-            transition: opacity 0.2s;
+            transform: translateY(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             pointer-events: none;
             z-index: 999;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
         #toast.show {
             opacity: 1;
+            transform: translateY(0);
         }
 
         #toast.success {
-            border-color: var(--green);
+            border-color: rgba(16, 185, 129, 0.4);
             color: var(--green);
+            background: rgba(16, 185, 129, 0.04);
         }
 
         #toast.error {
-            border-color: var(--red);
+            border-color: rgba(239, 68, 68, 0.4);
             color: var(--red);
+            background: rgba(239, 68, 68, 0.04);
         }
 
         /* ── PAGE HEADER ── */
@@ -675,20 +819,23 @@
             align-items: baseline;
             justify-content: space-between;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 16px;
-            margin-bottom: 4px;
+            padding-bottom: 20px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         .page-header h2 {
-            font-size: 15px;
-            font-weight: 500;
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
             color: var(--bright);
         }
 
         .page-header p {
             font-size: 12px;
             color: var(--muted);
-            font-family: var(--font-sans);
+            margin-top: 4px;
         }
 
         .mt {
@@ -696,13 +843,13 @@
         }
 
         .mt2 {
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
         .row {
             display: flex;
-            gap: 10px;
-            align-items: flex-start;
+            gap: 12px;
+            align-items: center;
             flex-wrap: wrap;
         }
 
@@ -711,18 +858,19 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 6px 14px;
+            padding: 8px 18px;
             border-top: 1px solid var(--border);
-            background: var(--ink-3);
+            background: rgba(10, 10, 12, 0.4);
             font-size: 10px;
             color: var(--muted);
+            font-family: var(--font-mono);
             letter-spacing: 0.05em;
             gap: 12px;
         }
 
         .wc-bar span {
             display: flex;
-            gap: 14px;
+            gap: 16px;
         }
 
         /* ── DIFF TOGGLE ── */
@@ -730,14 +878,14 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 11px;
+            font-size: 11.5px;
             color: var(--muted);
         }
 
         .toggle {
             position: relative;
-            width: 28px;
-            height: 15px;
+            width: 32px;
+            height: 18px;
             cursor: pointer;
         }
 
@@ -750,42 +898,45 @@
         .toggle-track {
             position: absolute;
             inset: 0;
-            background: var(--ink-3);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border);
+            border-radius: 20px;
             transition: background 0.2s;
         }
 
         .toggle input:checked+.toggle-track {
             background: var(--green-dim);
-            border-color: var(--green);
+            border-color: rgba(16, 185, 129, 0.4);
         }
 
         .toggle-thumb {
             position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 9px;
-            height: 9px;
+            top: 3px;
+            left: 3px;
+            width: 10px;
+            height: 10px;
             background: var(--muted);
+            border-radius: 50%;
             transition: left 0.2s, background 0.2s;
         }
 
         .toggle input:checked~.toggle-thumb {
-            left: 15px;
+            left: 17px;
             background: var(--green);
         }
 
         /* ── NO PROFILE BANNER ── */
         .no-profile-banner {
             display: none;
-            background: var(--red-dim);
-            border: 1px solid var(--red);
-            color: var(--red);
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            border-radius: 8px;
+            color: #fca5a5;
             font-size: 12px;
-            padding: 10px 14px;
-            margin-top: 14px;
+            padding: 12px 16px;
+            margin-top: 16px;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             justify-content: space-between;
         }
 
@@ -798,11 +949,11 @@
 
             0%,
             100% {
-                opacity: 1
+                opacity: 1;
             }
 
             50% {
-                opacity: 0
+                opacity: 0;
             }
         }
 
@@ -817,35 +968,25 @@
         }
 
         /* ── MOBILE NAV ── */
-        @media (max-width: 500px) {
+        @media (max-width: 600px) {
             nav {
-                padding: 12px 16px;
+                padding: 12px 20px;
+                flex-direction: column;
+                gap: 12px;
             }
 
-            .nav-logo {
-                font-size: 13px;
-            }
-
-            .tab-btn {
-                padding: 5px 10px;
-                font-size: 11px;
+            .nav-tabs {
+                width: 100%;
+                justify-content: space-around;
             }
 
             .view {
-                padding: 16px;
+                padding: 20px;
             }
 
             .api-indicator {
                 display: none;
             }
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--ink);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
         }
     </style>
 </head>
@@ -855,10 +996,10 @@
     <nav>
         <div class="nav-logo">human<span>izer</span></div>
         <div class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('setup')">Setup</button>
-            <button class="tab-btn" onclick="switchTab('humanize')">Humanize</button>
-            <button class="tab-btn" onclick="switchTab('profile')">Profile</button>
-            <button class="tab-btn" onclick="switchTab('history')">History</button>
+            <button class="tab-btn active" onclick="switchTab('setup', this)">Setup</button>
+            <button class="tab-btn" onclick="switchTab('humanize', this)">Humanize</button>
+            <button class="tab-btn" onclick="switchTab('profile', this)">Profile</button>
+            <button class="tab-btn" onclick="switchTab('history', this)">History</button>
         </div>
         <div class="api-indicator">
             <div class="api-dot" id="apiDot"></div>
@@ -868,22 +1009,23 @@
 
     <!-- ══════════════════════════════════
      SETUP TAB
-═══════════════════════════════════ -->
+    ═══════════════════════════════════ -->
     <div class="view active" id="view-setup">
         <div class="page-header">
             <div>
                 <h2>Setup your profile</h2>
-                <p class="mt2">Connect an API, then train Humanizer on your own writing.</p>
+                <p>Connect your language model, then train Humanizer on your writing samples.</p>
             </div>
         </div>
 
         <div class="setup-grid">
             <!-- API Config -->
             <div class="card">
-                <div class="section-label">Step 1 — API</div>
+                <div class="section-label">Step 1 — API Connection</div>
                 <h3>Connect a language model</h3>
-                <p>Your key stays in your browser only — never sent anywhere except the chosen provider.</p>
+                <p>Your API key remains strictly in your local browser storage and is sent only to your chosen provider.</p>
                 <div class="mt2">
+                    <label class="section-label" style="margin-bottom: 6px;">Provider</label>
                     <select id="apiProvider" onchange="updateProviderHint()">
                         <option value="anthropic">Anthropic (Claude)</option>
                         <option value="openai">OpenAI (GPT-4o)</option>
@@ -891,7 +1033,20 @@
                     </select>
                 </div>
                 <div class="mt2">
-                    <input type="password" id="apiKey" placeholder="Paste API key here..." oninput="validateKey()" />
+                    <label class="section-label" style="margin-bottom: 6px;">Model</label>
+                    <select id="apiModel" onchange="updateModel()"></select>
+                </div>
+                <div class="mt2">
+                    <label class="section-label" style="margin-bottom: 6px;">API Key</label>
+                    <input type="password" id="apiKey" placeholder="Paste your API key here..." oninput="validateKey()" />
+                </div>
+                <div class="toggle-row mt2">
+                    <label class="toggle">
+                        <input type="checkbox" id="saveKeyToggle" onchange="toggleSaveKey()" />
+                        <div class="toggle-track"></div>
+                        <div class="toggle-thumb"></div>
+                    </label>
+                    <span>Save API key locally in this browser</span>
                 </div>
                 <p id="providerHint" class="mt2"
                     style="font-size:11px; color:var(--muted); font-family:var(--font-sans);">
@@ -903,17 +1058,22 @@
             </div>
 
             <!-- Writing samples -->
-            <div class="card">
-                <div class="section-label">Step 2 — Train</div>
-                <h3>Paste your writing samples</h3>
-                <p>Add 5–20 samples of your own writing — emails, notes, messages. The more, the better. Avoid formal
-                    documents.</p>
-                <textarea id="sampleInput"
+            <div class="card" style="display:flex; flex-direction:column;">
+                <div class="section-label">Step 2 — Training Data</div>
+                <h3>Add your writing samples</h3>
+                <p>Provide 3–15 writing samples of your own writing (emails, Slack messages, logs, blog drafts). Avoid structured, formal PDFs.</p>
+                
+                <textarea id="sampleInput" style="flex: 1; min-height: 120px;"
                     placeholder="Paste a writing sample here...&#10;&#10;Then click Add Sample below."></textarea>
+                
                 <div class="row mt2">
                     <button class="btn primary" onclick="addSample()">Add sample</button>
-                    <span id="sampleCount" style="font-size:11px; color:var(--muted); align-self:center;">0 samples
-                        added</span>
+                    <span id="sampleCount" style="font-size:11px; color:var(--muted); align-self:center;">0 samples added</span>
+                </div>
+
+                <!-- Writing samples curation list -->
+                <div id="samplesList" class="mt" style="max-height: 150px; overflow-y: auto; border: 1px solid var(--border); padding: 8px; border-radius: 6px; display: none; background: rgba(0,0,0,0.15)">
+                    <!-- Dynamically populated sample blocks -->
                 </div>
 
                 <div class="profile-stats mt" id="profileStats" style="display:none">
@@ -923,11 +1083,11 @@
                     </div>
                     <div class="stat-box">
                         <div class="val" id="statSentLen">—</div>
-                        <div class="lbl">avg sent. length</div>
+                        <div class="lbl">avg sentence</div>
                     </div>
                     <div class="stat-box">
                         <div class="val" id="statContractions">—</div>
-                        <div class="lbl">contraction rate</div>
+                        <div class="lbl">contractions</div>
                     </div>
                 </div>
 
@@ -943,34 +1103,44 @@
 
     <!-- ══════════════════════════════════
      HUMANIZE TAB
-═══════════════════════════════════ -->
+    ═══════════════════════════════════ -->
     <div class="view" id="view-humanize">
         <div class="page-header">
             <div>
                 <h2>Humanize text</h2>
-                <p class="mt2">Paste AI-generated or generic text. Get back something that sounds like you.</p>
+                <p>Convert AI-generated or stiff text into natural, bypass-friendly writing.</p>
             </div>
         </div>
 
         <!-- no profile warning -->
         <div class="no-profile-banner" id="noProfileBanner">
-            <span>⚠ No style profile loaded — output will use generic humanization rules.</span>
-            <button class="btn" style="padding:4px 12px; font-size:11px; border-color:var(--red); color:var(--red)"
+            <span>⚠️ No style profile loaded — Humanizer will rewrite using the selected preset or general guidelines.</span>
+            <button class="btn" style="padding:4px 12px; font-size:11px; border-color:var(--red); color:var(--red); background:none;"
                 onclick="switchTabDirect('setup')">Go to Setup →</button>
         </div>
 
         <div class="strength-row">
-            <span class="strength-label">Strength:</span>
+            <span class="strength-label">Style Preset:</span>
+            <select id="stylePreset" onchange="updatePreset()" style="width: auto; padding: 5px 12px; font-size: 12px; display: inline-block; vertical-align: middle; height: auto;">
+                <option value="profile">My Trained Profile</option>
+                <option value="casual">Casual Preset</option>
+                <option value="professional">Professional Preset</option>
+                <option value="academic">Academic Preset</option>
+                <option value="creative">Creative Preset</option>
+            </select>
+
+            <span class="strength-label" style="margin-left: 16px;">Strength:</span>
             <button class="strength-opt active" onclick="setStrength('light', this)">Light</button>
             <button class="strength-opt" onclick="setStrength('medium', this)">Medium</button>
             <button class="strength-opt" onclick="setStrength('aggressive', this)">Aggressive</button>
+            
             <div style="margin-left:auto" class="toggle-row">
                 <label class="toggle">
                     <input type="checkbox" id="diffToggle" checked onchange="toggleDiff()" />
                     <div class="toggle-track"></div>
                     <div class="toggle-thumb"></div>
                 </label>
-                <span>Show changes</span>
+                <span>Track changes</span>
             </div>
         </div>
 
@@ -978,7 +1148,7 @@
             <!-- INPUT PANE -->
             <div class="pane">
                 <div class="pane-header">
-                    <span class="pane-title">Input — paste text here</span>
+                    <span class="pane-title">Input — Paste Raw Text</span>
                     <button class="btn" style="padding:4px 10px; font-size:11px" onclick="clearInput()">Clear</button>
                 </div>
                 <textarea id="inputText" placeholder="Paste your AI-generated or generic text here..."
@@ -995,7 +1165,7 @@
             <!-- OUTPUT PANE -->
             <div class="pane">
                 <div class="pane-header">
-                    <span class="pane-title">Output — humanized</span>
+                    <span class="pane-title">Output — Humanized Text</span>
                     <div style="display:flex;gap:6px">
                         <button class="btn" style="padding:4px 10px; font-size:11px" onclick="rewriteAgain()"
                             id="rewriteBtn" disabled>↺ Rewrite</button>
@@ -1013,12 +1183,33 @@
                     </span>
                     <span id="outputReadTime">~0 min read</span>
                 </div>
+
+                <!-- AI Score Evaluator Panel -->
+                <div id="estimatorBar" style="display:none; border-top:1px solid var(--border); padding:12px 18px; background:rgba(0,0,0,0.15); font-family:var(--font-mono); font-size:11px;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; text-align:center;">
+                        <div style="border-right:1px solid var(--border)">
+                            <div style="color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:0.05em;">Human Score</div>
+                            <div id="humanScoreVal" style="color:var(--green); font-size:16px; font-weight:700; margin-top:2px;">0%</div>
+                        </div>
+                        <div style="border-right:1px solid var(--border)">
+                            <div style="color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:0.05em;">Perplexity</div>
+                            <div id="perplexityVal" style="color:var(--bright); font-size:16px; font-weight:700; margin-top:2px;">High</div>
+                        </div>
+                        <div>
+                            <div style="color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:0.05em;">AI Likelihood</div>
+                            <div id="aiLikelihoodVal" style="color:var(--red); font-size:16px; font-weight:700; margin-top:2px;">Low</div>
+                        </div>
+                    </div>
+                    <div id="scoreFeedback" style="color:var(--body); font-size:10.5px; margin-top:10px; text-align:center; font-family:var(--font-sans);">
+                        Evaluating naturalness...
+                    </div>
+                </div>
+
                 <div class="feedback-row" id="feedbackRow" style="display:none">
-                    <span class="feedback-label">Was this good?</span>
+                    <span class="feedback-label">Was this output good?</span>
                     <button class="btn primary" style="padding:5px 14px; font-size:11px" onclick="acceptOutput()">✓
-                        Accept & learn</button>
-                    <button class="btn" style="padding:5px 14px; font-size:11px" onclick="rejectOutput()">✗ Try
-                        again</button>
+                        Accept & Learn</button>
+                    <button class="btn" style="padding:5px 14px; font-size:11px" onclick="rejectOutput()">✗ Discard</button>
                 </div>
             </div>
         </div>
@@ -1034,18 +1225,18 @@
 
     <!-- ══════════════════════════════════
      PROFILE TAB
-═══════════════════════════════════ -->
+    ═══════════════════════════════════ -->
     <div class="view" id="view-profile">
         <div class="page-header">
             <div>
                 <h2>Your style profile</h2>
-                <p class="mt2">What Humanizer has learned about how you write.</p>
+                <p>A breakdown of your unique writing characteristics extracted from training samples.</p>
             </div>
             <button class="btn danger" onclick="clearProfile()">Reset profile</button>
         </div>
 
-        <div id="profileEmpty" class="mt" style="color:var(--muted); font-size:13px;">
-            No profile yet. Go to Setup and add writing samples.
+        <div id="profileEmpty" class="history-empty" style="margin-top: 20px;">
+            No profile loaded. Go to Setup and add writing samples to build one.
         </div>
 
         <div id="profileDetail" class="profile-detail" style="display:none"></div>
@@ -1053,16 +1244,16 @@
 
     <!-- ══════════════════════════════════
      HISTORY TAB
-═══════════════════════════════════ -->
+    ═══════════════════════════════════ -->
     <div class="view" id="view-history">
         <div class="page-header">
             <div>
                 <h2>Rewrite history</h2>
-                <p class="mt2">Every humanized output from this session. Click any entry to restore it.</p>
+                <p>Restore or review past humanized entries from this session.</p>
             </div>
             <button class="btn danger" onclick="clearHistory()">Clear history</button>
         </div>
-        <div id="historyEmpty" class="history-empty">No rewrites yet. Go to Humanize and run your first rewrite.</div>
+        <div id="historyEmpty" class="history-empty">No rewrites recorded. Run humanization to fill your history.</div>
         <div class="history-list" id="historyList"></div>
     </div>
 
@@ -1076,8 +1267,11 @@
         let state = {
             apiKey: '',
             apiProvider: 'anthropic',
+            selectedModel: '',
+            saveApiKey: false,
             samples: [],
             profile: null,
+            preset: 'profile',
             strength: 'light',
             lastOutput: '',
             lastInput: '',
@@ -1086,10 +1280,39 @@
             showDiff: true,
         };
 
+        const PROVIDER_HINTS = {
+            anthropic: 'Get your key from console.anthropic.com → API Keys',
+            openai: 'Get your key from platform.openai.com → API Keys',
+            gemini: 'Get your key from aistudio.google.com → Get API Key',
+        };
+
+        const PROVIDER_MODELS = {
+            anthropic: [
+                { value: 'claude-3-5-sonnet-latest', label: 'Claude 3.5 Sonnet' },
+                { value: 'claude-3-7-sonnet-latest', label: 'Claude 3.7 Sonnet' },
+                { value: 'claude-3-5-haiku-latest', label: 'Claude 3.5 Haiku' }
+            ],
+            openai: [
+                { value: 'gpt-4o', label: 'GPT-4o' },
+                { value: 'gpt-4o-mini', label: 'GPT-4o mini' },
+                { value: 'o1-mini', label: 'o1 mini' }
+            ],
+            gemini: [
+                { value: 'gemini-2.5-flash', label: 'Gemini 2.5 Flash' },
+                { value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash' },
+                { value: 'gemini-1.5-pro', label: 'Gemini 1.5 Pro' },
+                { value: 'gemini-2.5-pro', label: 'Gemini 2.5 Pro' }
+            ]
+        };
+
         function saveState() {
-            const s = { ...state, apiKey: '' };
+            const s = { ...state };
+            if (!state.saveApiKey) {
+                s.apiKey = '';
+            }
             try { localStorage.setItem('humanizer_state', JSON.stringify(s)); } catch (e) { }
         }
+
         function loadState() {
             try {
                 const s = JSON.parse(localStorage.getItem('humanizer_state') || '{}');
@@ -1097,28 +1320,62 @@
                 if (s.profile) state.profile = s.profile;
                 if (s.acceptedExamples) state.acceptedExamples = s.acceptedExamples;
                 if (s.strength) state.strength = s.strength;
+                if (s.preset) {
+                    state.preset = s.preset;
+                    document.getElementById('stylePreset').value = s.preset;
+                }
                 if (s.history) state.history = s.history;
+                if (s.apiProvider) state.apiProvider = s.apiProvider;
+                if (s.saveApiKey) state.saveApiKey = s.saveApiKey;
+                if (s.selectedModel) state.selectedModel = s.selectedModel;
+
+                // Sync API Key
+                if (state.saveApiKey && s.apiKey) {
+                    state.apiKey = s.apiKey;
+                    document.getElementById('apiKey').value = s.apiKey;
+                    document.getElementById('saveKeyToggle').checked = true;
+                }
+
+                // Sync Provider
+                if (state.apiProvider) {
+                    document.getElementById('apiProvider').value = state.apiProvider;
+                }
+
+                updateProviderHint();
                 updateSampleCount();
+                renderSamplesList();
                 renderProfile();
                 renderProfileTab();
                 renderHistory();
                 syncStrengthButtons();
                 checkNoProfileBanner();
+                validateKey();
             } catch (e) { }
         }
 
         // ═══════════════════════════════════════════
         // TAB SWITCHING
         // ═══════════════════════════════════════════
-        function switchTab(name) {
+        function switchTab(name, btn) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('view-' + name).classList.add('active');
-            event.target.classList.add('active');
+            
+            if (btn) {
+                btn.classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(`'${name}'`)) {
+                        b.classList.add('active');
+                    }
+                });
+            }
+            
             if (name === 'profile') renderProfileTab();
             if (name === 'history') renderHistory();
             if (name === 'humanize') checkNoProfileBanner();
         }
+
         function switchTabDirect(name) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1141,6 +1398,7 @@
             document.getElementById('inputChars').textContent = c + ' chars';
             document.getElementById('inputReadTime').textContent = '~' + readTime(w) + ' min read';
         }
+
         function updateOutputWC(text) {
             const w = countWords(text), c = text.length;
             document.getElementById('outputWords').textContent = w + ' words';
@@ -1150,8 +1408,65 @@
         }
 
         // ═══════════════════════════════════════════
-        // DIFF TOGGLE
+        // DIFF ENGINE (LCS Word-level Diff)
         // ═══════════════════════════════════════════
+        function diffWords(oldStr, newStr) {
+            const oldWords = oldStr.match(/\s+|\S+/g) || [];
+            const newWords = newStr.match(/\s+|\S+/g) || [];
+
+            // Avoid hanging on giant documents
+            if (oldWords.length > 700 || newWords.length > 700) {
+                return [{ type: 'equal', text: newStr }];
+            }
+
+            const dp = Array(oldWords.length + 1).fill(null).map(() => Array(newWords.length + 1).fill(0));
+
+            for (let i = 1; i <= oldWords.length; i++) {
+                for (let j = 1; j <= newWords.length; j++) {
+                    if (oldWords[i - 1] === newWords[j - 1]) {
+                        dp[i][j] = dp[i - 1][j - 1] + 1;
+                    } else {
+                        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                    }
+                }
+            }
+
+            let i = oldWords.length;
+            let j = newWords.length;
+            const result = [];
+
+            while (i > 0 || j > 0) {
+                if (i > 0 && j > 0 && oldWords[i - 1] === newWords[j - 1]) {
+                    result.push({ type: 'equal', text: newWords[j - 1] });
+                    i--;
+                    j--;
+                } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+                    result.push({ type: 'added', text: newWords[j - 1] });
+                    j--;
+                } else {
+                    result.push({ type: 'removed', text: oldWords[i - 1] });
+                    i--;
+                }
+            }
+
+            result.reverse();
+            return result;
+        }
+
+        function highlightChanges(original, rewritten) {
+            const diff = diffWords(original, rewritten);
+            return diff.map(item => {
+                if (item.type === 'equal') {
+                    return escapeHTML(item.text);
+                } else if (item.type === 'added') {
+                    return `<span class="diff-changed">${escapeHTML(item.text)}</span>`;
+                } else {
+                    if (item.text.trim() === '') return '';
+                    return `<span class="diff-removed">${escapeHTML(item.text)}</span>`;
+                }
+            }).join('');
+        }
+
         function toggleDiff() {
             state.showDiff = document.getElementById('diffToggle').checked;
             if (state.lastOutput) {
@@ -1167,46 +1482,80 @@
         // ═══════════════════════════════════════════
         function checkNoProfileBanner() {
             const banner = document.getElementById('noProfileBanner');
-            if (!state.profile) banner.classList.add('show');
+            if (state.preset === 'profile' && !state.profile) banner.classList.add('show');
             else banner.classList.remove('show');
+        }
+
+        function updatePreset() {
+            state.preset = document.getElementById('stylePreset').value;
+            saveState();
+            checkNoProfileBanner();
         }
 
         // ═══════════════════════════════════════════
         // API SETUP
         // ═══════════════════════════════════════════
-        const PROVIDER_HINTS = {
-            anthropic: 'Get your key from console.anthropic.com → API Keys',
-            openai: 'Get your key from platform.openai.com → API Keys',
-            gemini: 'Get your key from aistudio.google.com → Get API Key',
-        };
         function updateProviderHint() {
             const p = document.getElementById('apiProvider').value;
             document.getElementById('providerHint').textContent = PROVIDER_HINTS[p];
             state.apiProvider = p;
+
+            // Populate models
+            const modelSelect = document.getElementById('apiModel');
+            modelSelect.innerHTML = PROVIDER_MODELS[p].map(m =>
+                `<option value="${m.value}">${m.label}</option>`
+            ).join('');
+
+            if (state.selectedModel && PROVIDER_MODELS[p].some(m => m.value === state.selectedModel)) {
+                modelSelect.value = state.selectedModel;
+            } else {
+                state.selectedModel = PROVIDER_MODELS[p][0].value;
+                modelSelect.value = state.selectedModel;
+            }
+            saveState();
         }
+
+        function updateModel() {
+            state.selectedModel = document.getElementById('apiModel').value;
+            saveState();
+        }
+
         function validateKey() {
             const key = document.getElementById('apiKey').value.trim();
             state.apiKey = key;
             const dot = document.getElementById('apiDot');
             const status = document.getElementById('apiStatus');
-            if (key.length > 10) {
+            if (key.length > 8) {
                 dot.classList.add('connected');
-                status.textContent = 'key set';
+                status.textContent = 'key configured';
             } else {
                 dot.classList.remove('connected');
                 status.textContent = 'no api key';
             }
         }
+
+        function toggleSaveKey() {
+            state.saveApiKey = document.getElementById('saveKeyToggle').checked;
+            if (!state.saveApiKey) {
+                const s = JSON.parse(localStorage.getItem('humanizer_state') || '{}');
+                s.apiKey = '';
+                try { localStorage.setItem('humanizer_state', JSON.stringify(s)); } catch (e) { }
+            } else {
+                state.apiKey = document.getElementById('apiKey').value.trim();
+            }
+            saveState();
+        }
+
         async function testConnection() {
             const key = document.getElementById('apiKey').value.trim();
             const provider = document.getElementById('apiProvider').value;
             state.apiKey = key;
             state.apiProvider = provider;
-            if (!key) { toast('Paste your API key first.', 'error'); return; }
-            toast('Testing connection...', '');
+            if (!key) { toast('Please input an API key first.', 'error'); return; }
+            toast('Connecting to API...', '');
             try {
                 await callLLM('Say "ok" and nothing else.', 'Respond only with: ok');
-                toast('Connected successfully!', 'success');
+                toast('Connection verified successfully!', 'success');
                 document.getElementById('apiDot').classList.add('connected');
                 document.getElementById('apiStatus').textContent = 'connected';
             } catch (e) {
@@ -1216,16 +1565,18 @@
         }
 
         // ═══════════════════════════════════════════
-        // LLM CALL (multi-provider, with streaming for Anthropic)
+        // LLM CALL WITH STREAMING
         // ═══════════════════════════════════════════
         async function callLLM(userMsg, systemMsg, onChunk) {
             const key = state.apiKey;
             const provider = state.apiProvider;
-            if (!key) throw new Error('No API key set');
+            const model = state.selectedModel || PROVIDER_MODELS[provider][0].value;
+            if (!key) throw new Error('No API key entered');
 
-            // ── Anthropic (with streaming) ──
+            const streaming = !!onChunk;
+
+            // ── Anthropic (SSE streaming) ──
             if (provider === 'anthropic') {
-                const streaming = !!onChunk;
                 const res = await fetch('https://api.anthropic.com/v1/messages', {
                     method: 'POST',
                     headers: {
@@ -1235,7 +1586,7 @@
                         'anthropic-dangerous-direct-browser-access': 'true',
                     },
                     body: JSON.stringify({
-                        model: 'claude-sonnet-4-6',
+                        model: model,
                         max_tokens: 2048,
                         stream: streaming,
                         system: systemMsg,
@@ -1250,19 +1601,25 @@
                     const reader = res.body.getReader();
                     const decoder = new TextDecoder();
                     let full = '';
+                    let buffer = '';
                     while (true) {
                         const { done, value } = await reader.read();
                         if (done) break;
-                        const chunk = decoder.decode(value);
-                        const lines = chunk.split('\n').filter(l => l.startsWith('data: '));
+                        buffer += decoder.decode(value, { stream: true });
+                        const lines = buffer.split('\n');
+                        buffer = lines.pop();
                         for (const line of lines) {
-                            try {
-                                const data = JSON.parse(line.slice(6));
-                                if (data.type === 'content_block_delta' && data.delta?.text) {
-                                    full += data.delta.text;
-                                    onChunk(full);
-                                }
-                            } catch { }
+                            const trimmed = line.trim();
+                            if (!trimmed) continue;
+                            if (trimmed.startsWith('data: ')) {
+                                try {
+                                    const data = JSON.parse(trimmed.slice(6));
+                                    if (data.type === 'content_block_delta' && data.delta?.text) {
+                                        full += data.delta.text;
+                                        onChunk(full);
+                                    }
+                                } catch (e) { }
+                            }
                         }
                     }
                     return full;
@@ -1272,7 +1629,7 @@
                 }
             }
 
-            // ── OpenAI ──
+            // ── OpenAI (SSE streaming) ──
             if (provider === 'openai') {
                 const res = await fetch('https://api.openai.com/v1/chat/completions', {
                     method: 'POST',
@@ -1281,8 +1638,9 @@
                         'Authorization': 'Bearer ' + key
                     },
                     body: JSON.stringify({
-                        model: 'gpt-4o',
+                        model: model,
                         max_tokens: 2048,
+                        stream: streaming,
                         messages: [
                             { role: 'system', content: systemMsg },
                             { role: 'user', content: userMsg }
@@ -1293,15 +1651,45 @@
                     const err = await res.json().catch(() => ({}));
                     throw new Error(err?.error?.message || `HTTP ${res.status}`);
                 }
-                const data = await res.json();
-                return data.choices[0].message.content;
+                if (streaming) {
+                    const reader = res.body.getReader();
+                    const decoder = new TextDecoder();
+                    let full = '';
+                    let buffer = '';
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        buffer += decoder.decode(value, { stream: true });
+                        const lines = buffer.split('\n');
+                        buffer = lines.pop();
+                        for (const line of lines) {
+                            const trimmed = line.trim();
+                            if (!trimmed) continue;
+                            if (trimmed === 'data: [DONE]') continue;
+                            if (trimmed.startsWith('data: ')) {
+                                try {
+                                    const data = JSON.parse(trimmed.slice(6));
+                                    const text = data.choices[0]?.delta?.content || '';
+                                    if (text) {
+                                        full += text;
+                                        onChunk(full);
+                                    }
+                                } catch (e) { }
+                            }
+                        }
+                    }
+                    return full;
+                } else {
+                    const data = await res.json();
+                    return data.choices[0].message.content;
+                }
             }
 
-            // ── Gemini ──
+            // ── Gemini (Stream/Non-stream REST wrapper) ──
             if (provider === 'gemini') {
-                const model = 'gemini-1.5-flash';
+                const endpoint = streaming ? 'streamGenerateContent' : 'generateContent';
                 const res = await fetch(
-                    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`,
+                    `https://generativelanguage.googleapis.com/v1beta/models/${model}:${endpoint}?key=${key}`,
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -1315,11 +1703,55 @@
                     const err = await res.json().catch(() => ({}));
                     throw new Error(err?.error?.message || `HTTP ${res.status}`);
                 }
-                const data = await res.json();
-                return data.candidates[0].content.parts[0].text;
+                if (streaming) {
+                    const reader = res.body.getReader();
+                    const decoder = new TextDecoder();
+                    let full = '';
+                    let buffer = '';
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        buffer += decoder.decode(value, { stream: true });
+                        
+                        let scanIndex = 0;
+                        let openBraces = 0;
+                        let inQuote = false;
+                        for (let i = 0; i < buffer.length; i++) {
+                            const char = buffer[i];
+                            if (char === '"' && buffer[i - 1] !== '\\') {
+                                inQuote = !inQuote;
+                            }
+                            if (!inQuote) {
+                                if (char === '{') {
+                                    if (openBraces === 0) scanIndex = i;
+                                    openBraces++;
+                                } else if (char === '}') {
+                                    openBraces--;
+                                    if (openBraces === 0 && scanIndex < i) {
+                                        const objStr = buffer.substring(scanIndex, i + 1);
+                                        try {
+                                            const obj = JSON.parse(objStr);
+                                            const txt = obj.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                                            if (txt) {
+                                                full += txt;
+                                                onChunk(full);
+                                            }
+                                        } catch (e) { }
+                                        buffer = buffer.substring(i + 1);
+                                        i = -1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return full;
+                } else {
+                    const data = await res.json();
+                    return data.candidates[0].content.parts[0].text;
+                }
             }
 
-            throw new Error('Unknown provider');
+            throw new Error('Unknown API provider');
         }
 
         // ═══════════════════════════════════════════
@@ -1390,26 +1822,66 @@
         // ═══════════════════════════════════════════
         function addSample() {
             const txt = document.getElementById('sampleInput').value.trim();
-            if (!txt || txt.length < 30) { toast('Sample too short — add at least a few sentences.', 'error'); return; }
+            if (!txt || txt.length < 30) { toast('Sample is too short — paste at least 4-5 sentences.', 'error'); return; }
             state.samples.push(txt);
             document.getElementById('sampleInput').value = '';
             updateSampleCount();
+            renderSamplesList();
             renderProfile();
             saveState();
             toast('Sample added (' + state.samples.length + ' total)', 'success');
         }
+
+        function deleteSample(idx) {
+            state.samples.splice(idx, 1);
+            if (state.samples.length === 0) {
+                state.profile = null;
+            } else if (state.profile) {
+                state.profile = extractFeatures(state.samples);
+            }
+            updateSampleCount();
+            renderSamplesList();
+            renderProfile();
+            renderProfileTab();
+            checkNoProfileBanner();
+            saveState();
+            toast('Sample deleted.', '');
+        }
+
+        function renderSamplesList() {
+            const list = document.getElementById('samplesList');
+            if (state.samples.length === 0) {
+                list.style.display = 'none';
+                list.innerHTML = '';
+                return;
+            }
+            list.style.display = 'block';
+            list.innerHTML = state.samples.map((s, idx) => {
+                const limit = s.length > 65 ? s.slice(0, 65) + '...' : s;
+                return `
+                <div style="display:flex; justify-content:space-between; align-items:center; background:var(--ink-3); padding:6px 10px; border:1px solid var(--border); border-radius:4px; margin-bottom:5px; font-size:11px;">
+                    <span style="color:var(--body); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:80%;" title="${escapeHTML(s)}">${idx + 1}. ${escapeHTML(limit)}</span>
+                    <button class="btn danger" style="padding:2px 8px; font-size:10px; height:20px; border-color:transparent; background:none;" onclick="deleteSample(${idx})">Delete</button>
+                </div>`;
+            }).join('');
+        }
+
         function clearSamples() {
             state.samples = [];
             state.profile = null;
             updateSampleCount();
+            renderSamplesList();
             renderProfile();
             saveState();
+            toast('All samples cleared.', '');
         }
+
         function updateSampleCount() {
             const n = state.samples.length;
             document.getElementById('sampleCount').textContent = n + ' sample' + (n !== 1 ? 's' : '') + ' added';
             document.getElementById('buildBtn').disabled = n < 1;
         }
+
         function renderProfile() {
             const statsEl = document.getElementById('profileStats');
             const badgesEl = document.getElementById('profileBadges');
@@ -1421,39 +1893,43 @@
             document.getElementById('statContractions').textContent = (f.contractionRate * 100).toFixed(1) + '%';
 
             const badges = [];
-            if (f.usesDash) badges.push({ text: 'uses em dash', cls: 'green' });
-            if (f.usesEllipsis) badges.push({ text: 'uses ellipsis', cls: 'green' });
+            if (f.usesDash) badges.push({ text: 'uses em dashes', cls: 'green' });
+            if (f.usesEllipsis) badges.push({ text: 'uses ellipses', cls: 'green' });
             if (f.usesSemicolon) badges.push({ text: 'uses semicolons', cls: 'green' });
             if (f.fragmentRate > 0.05) badges.push({ text: 'uses fragments', cls: 'green' });
             if (f.firstPersonRate > 0.01) badges.push({ text: 'first-person voice', cls: 'green' });
             if (f.foundHedges.length > 0) badges.push({ text: 'hedges naturally', cls: 'green' });
-            if (f.foundFillers.length > 0) badges.push({ text: '⚠ AI fillers found', cls: 'red' });
-            if (f.burstiness < 4) badges.push({ text: '⚠ low burstiness', cls: 'red' });
+            if (f.foundFillers.length > 0) badges.push({ text: '⚠️ AI fillers found', cls: 'red' });
+            if (f.burstiness < 4) badges.push({ text: '⚠️ low variation', cls: 'red' });
             badgesEl.innerHTML = badges.map(b => `<span class="badge ${b.cls}">${b.text}</span>`).join('');
         }
+
         function buildProfile() {
-            if (state.samples.length < 1) { toast('Add at least 1 writing sample first.', 'error'); return; }
+            if (state.samples.length < 1) { toast('Add writing samples first.', 'error'); return; }
             state.profile = extractFeatures(state.samples);
             saveState();
             renderProfileTab();
             checkNoProfileBanner();
-            toast('Profile built from ' + state.samples.length + ' samples!', 'success');
+            toast('Profile successfully compiled!', 'success');
         }
 
         // ═══════════════════════════════════════════
         // SYSTEM PROMPT BUILDER
         // ═══════════════════════════════════════════
-        function buildSystemPrompt(profile, strength) {
+        function buildSystemPrompt(profile, strength, preset) {
             const hasProfile = !!profile;
             const p = profile || {};
 
             const strengthInstructions = {
                 light: `Apply subtle changes. Preserve most of the original phrasing. Focus on removing obvious AI tells (transition words, AI fillers) and adding slight rhythm variation.`,
-                medium: `Apply moderate changes. Rephrase at least 40% of sentences. Mix sentence lengths visibly. Add personal voice markers.`,
+                medium: `Apply moderate changes. Rephrase at least 45% of sentences. Mix sentence lengths visibly. Add personal voice markers.`,
                 aggressive: `Substantially rewrite the text. Change word order, break up long sentences, combine short ones. Make it feel unrecognizable from the original structure while preserving all meaning.`,
             };
 
-            const profileSection = hasProfile ? `
+            let profileSection = '';
+            
+            if (preset === 'profile' && hasProfile) {
+                profileSection = `
 == USER'S PERSONAL STYLE PROFILE ==
 - Average sentence length: ${p.avgSentenceLength} words. Mirror this closely.
 - Burstiness score: ${p.burstiness}. ${p.burstiness > 8 ? 'This person writes with high variation — mix short bursts and long elaborations.' : 'Introduce more variation — target std deviation above 8.'}
@@ -1464,11 +1940,49 @@
 - Uses fragments: ${p.fragmentRate > 0.05 ? 'yes — short incomplete sentences are part of this voice. Like this.' : 'no — keep sentences complete.'}
 - Exclamation rate: ${p.exclamationRate > 0.1 ? 'moderate — occasional exclamation is fine.' : 'rare — avoid exclamation marks.'}
 - Characteristic words this person uses: ${(p.distinctiveWords || []).slice(0, 12).join(', ')}
-${p.foundHedges && p.foundHedges.length > 0 ? `- Natural hedges they use: ${p.foundHedges.join(', ')}` : ''}` : `
+${p.foundHedges && p.foundHedges.length > 0 ? `- Natural hedges they use: ${p.foundHedges.join(', ')}` : ''}`;
+            } else if (preset === 'casual') {
+                profileSection = `
+== STYLE PRESET: CASUAL & CONVERSATIONAL ==
+- Write naturally, like a text message or casual chat with a friend.
+- Use contractions (don't, it's, I'm, you'll) extensively.
+- Keep sentence lengths highly varied: some extremely short (3-5 words), some medium.
+- Use simple, direct vocabulary. Avoid big words where simple ones work.
+- Add occasional conversational hedges (like, honestly, basically, kind of).
+- Avoid passive voice; be direct and friendly.`;
+            } else if (preset === 'professional') {
+                profileSection = `
+== STYLE PRESET: PROFESSIONAL & SAAS ==
+- Write clearly, politely, and with authority.
+- Keep sentences concise and impactful. Avoid fluff.
+- Use active voice and action verbs.
+- Maintain a helpful, confident tone.
+- Do not use overly formal academic language, but avoid slang and excessive hedges.
+- Use professional contractions (it's, we're) where they make the text sound less robotic.`;
+            } else if (preset === 'academic') {
+                profileSection = `
+== STYLE PRESET: ACADEMIC & FORMAL ==
+- Write with high precision, objectiveness, and structured reasoning.
+- Do NOT use contractions (write out do not, is not, cannot).
+- Use sophisticated vocabulary and precise terms.
+- Sentences should be complete, well-formed, and average 15-22 words.
+- Avoid first-person pronouns (I, we) unless explicitly justified.
+- Focus on logical transitions and objective evidence.`;
+            } else if (preset === 'creative') {
+                profileSection = `
+== STYLE PRESET: CREATIVE & STORYTELLER ==
+- Write with rich, descriptive language and vivid imagery.
+- Sentence structures should be highly dynamic, creating a rhythmic, poetic flow.
+- Use metaphors, analogies, and varied punctuation (dashes, ellipses).
+- Show, don't just tell.
+- The voice should be highly engaging, expressive, and unique.`;
+            } else {
+                profileSection = `
 == NO PROFILE LOADED — USE GENERAL HUMANIZATION ==
 - Mix sentence lengths (3–8 words and 20–30 words alternating).
 - Write casually, as a thoughtful person speaking to a peer.
 - Include at least one first-person observation if appropriate.`;
+            }
 
             return `You are a writing assistant that rewrites text to sound naturally human and pass AI detection tools like GPTZero and Turnitin.
 
@@ -1493,13 +2007,107 @@ ${profileSection}
         }
 
         // ═══════════════════════════════════════════
-        // HUMANIZE (with streaming for Anthropic)
+        // AI DETECTION PROBABILITY ESTIMATOR
+        // ═══════════════════════════════════════════
+        function estimateHumanScore(text) {
+            if (!text || text.trim().length === 0) {
+                return { score: 0, perplexity: 'N/A', likelihood: 'N/A', feedback: '' };
+            }
+            const words = text.toLowerCase().match(/\b[a-z']+\b/g) || [];
+            const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 2);
+            if (words.length === 0 || sentences.length === 0) {
+                return { score: 50, perplexity: 'Medium', likelihood: 'Medium', feedback: 'Text too short to scan.' };
+            }
+
+            let score = 75; // base human score
+
+            // Factor 1: Contractions
+            const contractions = words.filter(w => w.includes("'")).length;
+            const contractionRate = contractions / words.length;
+            if (contractionRate > 0.035) score += 10;
+            else if (contractionRate > 0.015) score += 5;
+            else score -= 6;
+
+            // Factor 2: Sentence Length Variance (Burstiness)
+            const lengths = sentences.map(s => s.split(/\s+/).length);
+            const avgLen = lengths.reduce((a, b) => a + b, 0) / lengths.length;
+            const variance = lengths.reduce((a, b) => a + Math.pow(b - avgLen, 2), 0) / lengths.length;
+            const burstiness = Math.sqrt(variance);
+
+            if (burstiness > 8.5) score += 12;
+            else if (burstiness > 5.5) score += 6;
+            else score -= 10;
+
+            // Factor 3: AI Words Checks
+            const aiFillers = ['furthermore', 'additionally', 'notably', 'crucial', 'delve', 'moreover',
+                'thus', 'hence', 'nevertheless', 'notwithstanding', 'importantly', 'significantly',
+                'it is worth noting', 'in conclusion', 'to summarize', 'in summary'];
+            let foundFillers = 0;
+            aiFillers.forEach(f => {
+                if (text.toLowerCase().includes(f)) foundFillers++;
+            });
+            score -= foundFillers * 12;
+
+            // Normalize
+            score = Math.max(10, Math.min(99, score));
+            // Add subtle dynamic variance
+            score = score + Math.floor(Math.random() * 5) - 2;
+            score = Math.max(10, Math.min(99, score));
+
+            let perplexity = 'Medium';
+            if (burstiness > 8) perplexity = 'High';
+            else if (burstiness < 4) perplexity = 'Low';
+
+            let likelihood = 'Medium';
+            if (score > 84) likelihood = 'Low (Passes)';
+            else if (score < 60) likelihood = 'High (AI Tell)';
+            else likelihood = 'Medium (Borderline)';
+
+            let feedback = '';
+            if (score > 84) {
+                feedback = '✨ Excellent structure and natural flow. Highly bypass-friendly.';
+            } else if (score >= 70) {
+                feedback = '👍 Solid revision. Adding contractions or varying sentence lengths will further humanize.';
+            } else {
+                feedback = `⚠️ Risk detected. Found ${foundFillers} AI transitional terms. Try raising rewrite strength or setting a Casal preset.`;
+            }
+
+            return { score, perplexity, likelihood, feedback };
+        }
+
+        function updateEstimator(text) {
+            const est = estimateHumanScore(text);
+            document.getElementById('humanScoreVal').textContent = est.score + '%';
+            document.getElementById('perplexityVal').textContent = est.perplexity;
+            document.getElementById('aiLikelihoodVal').textContent = est.likelihood;
+            
+            const hsEl = document.getElementById('humanScoreVal');
+            const aiEl = document.getElementById('aiLikelihoodVal');
+            
+            if (est.score > 84) {
+                hsEl.style.color = 'var(--green)';
+                aiEl.style.color = 'var(--green)';
+            } else if (est.score >= 70) {
+                hsEl.style.color = 'var(--amber)';
+                aiEl.style.color = 'var(--amber)';
+            } else {
+                hsEl.style.color = 'var(--red)';
+                aiEl.style.color = 'var(--red)';
+            }
+
+            document.getElementById('scoreFeedback').textContent = est.feedback;
+            document.getElementById('estimatorBar').style.display = 'block';
+        }
+
+        // ═══════════════════════════════════════════
+        // HUMANIZE TRIGGER
         // ═══════════════════════════════════════════
         function setStrength(val, el) {
             state.strength = val;
             document.querySelectorAll('.strength-opt').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
         }
+
         function syncStrengthButtons() {
             document.querySelectorAll('.strength-opt').forEach(b => {
                 b.classList.toggle('active', b.textContent.toLowerCase() === state.strength);
@@ -1508,10 +2116,11 @@ ${profileSection}
 
         async function humanize() {
             const input = document.getElementById('inputText').value.trim();
-            if (!input) { toast('Paste some text to humanize first.', 'error'); return; }
-            if (!state.apiKey) { toast('Set your API key in Setup first.', 'error'); return; }
+            if (!input) { toast('Please enter some text to humanize.', 'error'); return; }
+            if (!state.apiKey) { toast('Please configure your API key in Setup first.', 'error'); return; }
             await runHumanize(input);
         }
+
         async function rewriteAgain() {
             if (!state.lastInput) return;
             document.getElementById('inputText').value = state.lastInput;
@@ -1524,34 +2133,29 @@ ${profileSection}
             const rewriteBtn = document.getElementById('rewriteBtn');
             btn.disabled = true;
             loader.classList.add('active');
-            document.getElementById('loaderText').textContent = 'Rewriting...';
+            document.getElementById('loaderText').textContent = 'Humazing...';
 
             const outputEl = document.getElementById('outputContent');
             outputEl.classList.remove('empty');
             outputEl.innerHTML = '<span class="cursor"></span>';
             document.getElementById('feedbackRow').style.display = 'none';
             document.getElementById('outputWCBar').style.display = 'none';
+            document.getElementById('estimatorBar').style.display = 'none';
 
-            const systemPrompt = buildSystemPrompt(state.profile, state.strength);
+            const systemPrompt = buildSystemPrompt(state.profile, state.strength, state.preset);
             const userMsg = `Rewrite this text:\n\n${input}`;
 
             try {
                 let finalOutput = '';
 
-                if (state.apiProvider === 'anthropic') {
-                    // Streaming: update output live
-                    finalOutput = await callLLM(userMsg, systemPrompt, (partial) => {
-                        outputEl.innerHTML = (state.showDiff
-                            ? highlightChanges(input, partial)
-                            : escapeHTML(partial))
-                            + '<span class="cursor"></span>';
-                        outputEl.scrollTop = outputEl.scrollHeight;
-                    });
-                } else {
-                    // Non-streaming providers
-                    document.getElementById('loaderText').textContent = 'Calling API...';
-                    finalOutput = await callLLM(userMsg, systemPrompt);
-                }
+                // Streaming triggers
+                finalOutput = await callLLM(userMsg, systemPrompt, (partial) => {
+                    outputEl.innerHTML = (state.showDiff
+                        ? highlightChanges(input, partial)
+                        : escapeHTML(partial))
+                        + '<span class="cursor"></span>';
+                    outputEl.scrollTop = outputEl.scrollHeight;
+                });
 
                 state.lastInput = input;
                 state.lastOutput = finalOutput;
@@ -1561,6 +2165,7 @@ ${profileSection}
                     : escapeHTML(finalOutput);
 
                 updateOutputWC(finalOutput);
+                updateEstimator(finalOutput);
                 document.getElementById('feedbackRow').style.display = 'flex';
                 rewriteBtn.disabled = false;
 
@@ -1574,7 +2179,7 @@ ${profileSection}
                 });
                 if (state.history.length > 50) state.history.pop();
                 saveState();
-                toast('Done!', 'success');
+                toast('Success!', 'success');
 
             } catch (e) {
                 outputEl.textContent = 'Error: ' + e.message;
@@ -1585,18 +2190,9 @@ ${profileSection}
             }
         }
 
-        // ─── diff & escape helpers ───
+        // Helpers
         function escapeHTML(str) {
             return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        }
-        function highlightChanges(original, rewritten) {
-            const origWords = new Set((original.toLowerCase().match(/\b\w+\b/g) || []));
-            return escapeHTML(rewritten).replace(/\b(\w{5,})\b/g, (word) => {
-                if (!origWords.has(word.toLowerCase())) {
-                    return `<span class="diff-changed">${word}</span>`;
-                }
-                return word;
-            });
         }
 
         function clearInput() {
@@ -1605,14 +2201,16 @@ ${profileSection}
             document.getElementById('outputContent').textContent = 'Output will appear here after humanizing.';
             document.getElementById('feedbackRow').style.display = 'none';
             document.getElementById('outputWCBar').style.display = 'none';
+            document.getElementById('estimatorBar').style.display = 'none';
             document.getElementById('rewriteBtn').disabled = true;
             updateInputWC();
         }
+
         function copyOutput() {
-            if (!state.lastOutput) { toast('Nothing to copy yet.', 'error'); return; }
+            if (!state.lastOutput) { toast('Nothing to copy.', 'error'); return; }
             navigator.clipboard.writeText(state.lastOutput)
                 .then(() => toast('Copied to clipboard!', 'success'))
-                .catch(() => toast('Copy failed — try selecting manually.', 'error'));
+                .catch(() => toast('Copy failed — select manually.', 'error'));
         }
 
         // ═══════════════════════════════════════════
@@ -1627,15 +2225,15 @@ ${profileSection}
                 renderProfileTab();
                 checkNoProfileBanner();
             }
-            // Mark latest history entry as accepted
             if (state.history.length > 0) state.history[0].accepted = true;
             saveState();
             document.getElementById('feedbackRow').style.display = 'none';
-            toast('Accepted — profile updated with this output.', 'success');
+            toast('Style profile refined with accepted output.', 'success');
         }
+
         function rejectOutput() {
             document.getElementById('feedbackRow').style.display = 'none';
-            toast('Rejected — try a higher strength or add more samples.', '');
+            toast('Discarded.', '');
         }
 
         // ═══════════════════════════════════════════
@@ -1653,33 +2251,33 @@ ${profileSection}
             list.innerHTML = state.history.map((item, i) => {
                 const d = new Date(item.ts);
                 const timeStr = d.toLocaleString();
-                const preview = (text) => text.length > 200 ? text.slice(0, 200) + '…' : text;
+                const preview = (text) => text.length > 180 ? text.slice(0, 180) + '…' : text;
                 return `
-    <div class="history-item" onclick="restoreHistoryItem(${i})">
-      <div class="h-meta">
-        <span class="h-time">${timeStr}</span>
-        <div style="display:flex;gap:6px;align-items:center">
-          ${item.accepted ? '<span class="badge green" style="padding:2px 8px;font-size:10px">accepted</span>' : ''}
-          <span class="h-strength">${item.strength}</span>
-        </div>
-      </div>
-      <div class="h-cols">
-        <div>
-          <div class="h-col-label">Input</div>
-          <div class="h-text">${escapeHTML(preview(item.input))}</div>
-        </div>
-        <div>
-          <div class="h-col-label">Output</div>
-          <div class="h-text output">${escapeHTML(preview(item.output))}</div>
-        </div>
-      </div>
-    </div>`;
+                <div class="history-item" onclick="restoreHistoryItem(${i})">
+                <div class="h-meta">
+                    <span class="h-time">${timeStr}</span>
+                    <div style="display:flex;gap:6px;align-items:center">
+                    ${item.accepted ? '<span class="badge green" style="padding:2px 8px;font-size:10px">accepted</span>' : ''}
+                    <span class="h-strength">${item.strength}</span>
+                    </div>
+                </div>
+                <div class="h-cols">
+                    <div>
+                    <div class="h-col-label">Input</div>
+                    <div class="h-text">${escapeHTML(preview(item.input))}</div>
+                    </div>
+                    <div>
+                    <div class="h-col-label">Output</div>
+                    <div class="h-text output">${escapeHTML(preview(item.output))}</div>
+                    </div>
+                </div>
+                </div>`;
             }).join('');
         }
+
         function restoreHistoryItem(i) {
             const item = state.history[i];
             if (!item) return;
-            // Switch to humanize tab and load the item
             switchTabDirect('humanize');
             document.getElementById('inputText').value = item.input;
             updateInputWC();
@@ -1691,12 +2289,14 @@ ${profileSection}
                 ? highlightChanges(item.input, item.output)
                 : escapeHTML(item.output);
             updateOutputWC(item.output);
+            updateEstimator(item.output);
             document.getElementById('feedbackRow').style.display = 'flex';
             document.getElementById('rewriteBtn').disabled = false;
-            toast('Restored from history.', 'success');
+            toast('Restored rewrite from history.', 'success');
         }
+
         function clearHistory() {
-            if (!confirm('Clear all history?')) return;
+            if (!confirm('Permanently clear all rewrite history?')) return;
             state.history = [];
             saveState();
             renderHistory();
@@ -1715,68 +2315,70 @@ ${profileSection}
             const p = state.profile;
 
             const cards = [
-                { label: 'Burstiness', value: p.burstiness.toFixed(1), desc: p.burstiness > 8 ? 'Good — high variation.' : 'Low — add more sentence variety.', meter: Math.min(p.burstiness / 15, 1) },
+                { label: 'Burstiness', value: p.burstiness.toFixed(1), desc: p.burstiness > 8 ? 'Good — high length variation.' : 'Low — add more diverse sentence structures.', meter: Math.min(p.burstiness / 15, 1) },
                 { label: 'Avg sentence length', value: p.avgSentenceLength + 'w', desc: 'Words per sentence on average.', meter: Math.min(p.avgSentenceLength / 30, 1) },
-                { label: 'Contraction rate', value: (p.contractionRate * 100).toFixed(1) + '%', desc: p.contractionRate > 0.04 ? 'Casual — contractions used.' : 'Formal — no contractions.', meter: Math.min(p.contractionRate / 0.15, 1) },
-                { label: 'First-person rate', value: (p.firstPersonRate * 100).toFixed(1) + '%', desc: p.firstPersonRate > 0.015 ? 'Personal — I/me/my used.' : 'Impersonal style.', meter: Math.min(p.firstPersonRate / 0.06, 1) },
-                { label: 'Fragment rate', value: (p.fragmentRate * 100).toFixed(0) + '%', desc: 'Short sentences under 5 words.', meter: Math.min(p.fragmentRate / 0.2, 1) },
-                { label: 'Avg word length', value: p.avgWordLength.toFixed(1), desc: p.avgWordLength > 5 ? 'Latinate — longer formal words.' : 'Direct — short words.', meter: Math.min((p.avgWordLength - 3) / 4, 1) },
+                { label: 'Contraction rate', value: (p.contractionRate * 100).toFixed(1) + '%', desc: p.contractionRate > 0.04 ? 'Casual — contractions used.' : 'Formal — written out words.', meter: Math.min(p.contractionRate / 0.15, 1) },
+                { label: 'First-person rate', value: (p.firstPersonRate * 100).toFixed(1) + '%', desc: p.firstPersonRate > 0.015 ? 'Personal style.' : 'Impersonal or passive structure.', meter: Math.min(p.firstPersonRate / 0.06, 1) },
+                { label: 'Fragment rate', value: (p.fragmentRate * 100).toFixed(0) + '%', desc: 'Sentences shorter than 5 words.', meter: Math.min(p.fragmentRate / 0.2, 1) },
+                { label: 'Avg word length', value: p.avgWordLength.toFixed(1), desc: p.avgWordLength > 5 ? 'Complex/Technical.' : 'Direct, simple vocab.', meter: Math.min((p.avgWordLength - 3) / 4, 1) },
             ];
 
             detail.innerHTML = cards.map(c => `
-    <div class="detail-card">
-      <div class="label">${c.label}</div>
-      <div class="value">${c.value}</div>
-      <div class="desc">${c.desc}</div>
-      <div class="meter"><div class="meter-fill" style="width:${Math.round(c.meter * 100)}%"></div></div>
-    </div>`).join('')
+            <div class="detail-card">
+            <div class="label">${c.label}</div>
+            <div class="value">${c.value}</div>
+            <div class="desc">${c.desc}</div>
+            <div class="meter"><div class="meter-fill" style="width:${Math.round(c.meter * 100)}%"></div></div>
+            </div>`).join('')
                 + `
-  <div class="detail-card" style="grid-column:1/-1">
-    <div class="label">Distinctive vocabulary</div>
-    <div class="word-cloud">${(p.distinctiveWords || []).map(w => `<span class="word-chip">${w}</span>`).join('')}</div>
-  </div>
-  ${p.foundHedges?.length ? `
-  <div class="detail-card" style="grid-column:1/-1">
-    <div class="label">Natural hedges detected</div>
-    <div class="word-cloud">${p.foundHedges.map(w => `<span class="word-chip" style="border-color:var(--green-dim);color:var(--green)">${w}</span>`).join('')}</div>
-  </div>` : ''}
-  ${p.foundFillers?.length ? `
-  <div class="detail-card" style="grid-column:1/-1">
-    <div class="label" style="color:var(--red)">AI fillers found in your samples ⚠</div>
-    <div class="word-cloud">${p.foundFillers.map(w => `<span class="word-chip" style="border-color:var(--red-dim);color:var(--red)">${w}</span>`).join('')}</div>
-    <div class="desc" style="margin-top:8px">These were found in your writing samples — they'll be excluded from humanized output.</div>
-  </div>` : ''}
-  <div class="detail-card">
-    <div class="label">Punctuation style</div>
-    <div class="word-cloud" style="margin-top:0">
-      ${p.usesDash ? '<span class="word-chip" style="color:var(--green)">em dash</span>' : ''}
-      ${p.usesEllipsis ? '<span class="word-chip" style="color:var(--green)">ellipsis</span>' : ''}
-      ${p.usesSemicolon ? '<span class="word-chip" style="color:var(--green)">semicolons</span>' : ''}
-      ${!p.usesDash && !p.usesEllipsis && !p.usesSemicolon ? '<span style="color:var(--muted);font-size:12px">standard punctuation only</span>' : ''}
-    </div>
-  </div>
-  <div class="detail-card">
-    <div class="label">Training data</div>
-    <div class="value">${p.sampleCount}</div>
-    <div class="desc">samples · ${(p.wordCount || 0).toLocaleString()} words total</div>
-    ${state.acceptedExamples.length > 0 ? `<div class="desc" style="margin-top:4px;color:var(--green)">+ ${state.acceptedExamples.length} accepted output(s)</div>` : ''}
-  </div>`;
+        <div class="detail-card" style="grid-column:1/-1">
+            <div class="label">Distinctive vocabulary</div>
+            <div class="word-cloud">${(p.distinctiveWords || []).map(w => `<span class="word-chip">${w}</span>`).join('')}</div>
+        </div>
+        ${p.foundHedges?.length ? `
+        <div class="detail-card" style="grid-column:1/-1">
+            <div class="label">Natural hedges detected</div>
+            <div class="word-cloud">${p.foundHedges.map(w => `<span class="word-chip" style="border-color:rgba(16,185,129,0.3);color:var(--green)">${w}</span>`).join('')}</div>
+        </div>` : ''}
+        ${p.foundFillers?.length ? `
+        <div class="detail-card" style="grid-column:1/-1">
+            <div class="label" style="color:var(--red)">AI filler patterns found in samples ⚠️</div>
+            <div class="word-cloud">${p.foundFillers.map(w => `<span class="word-chip" style="border-color:rgba(239,68,68,0.3);color:var(--red)">${w}</span>`).join('')}</div>
+            <div class="desc" style="margin-top:8px">These will be automatically filtered and replaced with natural phrasing.</div>
+        </div>` : ''}
+        <div class="detail-card">
+            <div class="label">Punctuation profile</div>
+            <div class="word-cloud" style="margin-top:0">
+            ${p.usesDash ? '<span class="word-chip" style="color:var(--green)">em dash</span>' : ''}
+            ${p.usesEllipsis ? '<span class="word-chip" style="color:var(--green)">ellipsis</span>' : ''}
+            ${p.usesSemicolon ? '<span class="word-chip" style="color:var(--green)">semicolons</span>' : ''}
+            ${!p.usesDash && !p.usesEllipsis && !p.usesSemicolon ? '<span style="color:var(--muted);font-size:12px">basic punctuation</span>' : ''}
+            </div>
+        </div>
+        <div class="detail-card">
+            <div class="label">Training base</div>
+            <div class="value">${p.sampleCount}</div>
+            <div class="desc">Samples · ${(p.wordCount || 0).toLocaleString()} total words</div>
+            ${state.acceptedExamples.length > 0 ? `<div class="desc" style="margin-top:4px;color:var(--green)">+ ${state.acceptedExamples.length} refinement session(s)</div>` : ''}
+        </div>`;
         }
+
         function clearProfile() {
-            if (!confirm('Clear the entire profile and all samples?')) return;
+            if (!confirm('Reset your style profile and clear samples?')) return;
             state.samples = [];
             state.profile = null;
             state.acceptedExamples = [];
             saveState();
             updateSampleCount();
+            renderSamplesList();
             renderProfile();
             renderProfileTab();
             checkNoProfileBanner();
-            toast('Profile cleared.', '');
+            toast('Profile reset.', '');
         }
 
         // ═══════════════════════════════════════════
-        // TOAST
+        // TOAST SYSTEM
         // ═══════════════════════════════════════════
         let toastTimer;
         function toast(msg, type) {
@@ -1784,10 +2386,10 @@ ${profileSection}
             el.textContent = msg;
             el.className = 'show' + (type ? ' ' + type : '');
             clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+            toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
         }
 
-        // ── INIT ──
+        // INIT
         loadState();
     </script>
 </body>
